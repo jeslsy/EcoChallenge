@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/Home_btn"
+        android:enabled="true"
+        android:title="Home"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/home_icon"/>
+
+    <item
+        android:id="@+id/challenge_btn"
+        android:enabled="true"
+        android:title="challenge"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/calendar_icon"/>
+
+    <item
+        android:id="@+id/List_bnt"
+        android:enabled="true"
+        android:title="List"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/list_icon"/>
+</menu>
