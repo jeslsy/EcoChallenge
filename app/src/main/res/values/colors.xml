@@ -7,5 +7,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="kb1">#fcca3a</color>
+    <color name="kb1">#fcca3a</color> #노랑
+    <color name="kb2">#eda129</color> #진노랑
 </resources>
