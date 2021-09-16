@@ -1,5 +1,8 @@
 package com.example.monthlychallenge;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +15,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,15 +37,22 @@ public class ChalListFragment extends Fragment {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
 
+    Button btn_addList;
+    Spinner sp_addList;
+    EditText ed_addList;
+
+    Context ct;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_chal_list, container, false);
+        ct = container.getContext();
 
         recyclerView = view.findViewById(R.id.recyclerView); //아이디 연결
         recyclerView.setHasFixedSize(true); //리사이클러뷰 기존 성능 강화
-        layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        layoutManager = new LinearLayoutManager(ct);
         recyclerView.setLayoutManager(layoutManager);
         arrayList = new ArrayList<>(); //Challenge 담을 어레이 리스트 (어댑터 쪽으로 날림)
 
@@ -65,10 +79,57 @@ public class ChalListFragment extends Fragment {
             }
         });
 
-        adapter = new ChalListAdapter(arrayList,  getActivity().getApplicationContext());
+        adapter = new ChalListAdapter(arrayList, ct);
         recyclerView.setAdapter(adapter); //리사이클러뷰에 어댑터 연결
+
+
+
+        // dialog
+        btn_addList = view.findViewById(R.id.addList);
+
+        btn_addList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder ad = new AlertDialog.Builder(ct);
+                View dialogView = getLayoutInflater().inflate(R.layout.add_list_dialog,null);
+                Context context = getActivity();
+
+                ad.setTitle("Challenge");
+
+                Spinner sp = (Spinner) view.findViewById(R.id.addListSp);
+                EditText ed = (EditText) view.findViewById(R.id.addLIstEd);
+
+                ArrayAdapter ad_monthly = ArrayAdapter.createFromResource(context, R.array.monthly_array, android.R.layout.simple_spinner_item);
+                ad_monthly.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                sp.setAdapter(ad_monthly);
+
+                ad.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String ed_val = ed.getText().toString();
+                        String sp_val = sp.getSelectedItem().toString();
+
+                        //firebase로 값 넘기기
+                    }
+                });
+
+                ad.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                // 창띄우기
+                ad.setView(dialogView);
+                ad.create();
+                ad.show();
+            }
+        });
 
         // Inflate the layout for this fragment
         return view;
     }
+
+
 }

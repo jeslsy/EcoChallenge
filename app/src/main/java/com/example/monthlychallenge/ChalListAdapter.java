@@ -29,6 +29,7 @@ public class ChalListAdapter extends RecyclerView.Adapter<ChalListAdapter.ChalLi
     public ChalListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // 실제 리스트뷰가 어댑터에 연결된 후 뷰 홀더 최초로 만들어냄
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chal_item, parent, false);
+
        ChalListViewHolder holder = new ChalListViewHolder(view);
         return holder;
     }
