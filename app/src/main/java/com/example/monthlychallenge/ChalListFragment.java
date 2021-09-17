@@ -92,21 +92,22 @@ public class ChalListFragment extends Fragment {
             public void onClick(View view) {
                 AlertDialog.Builder ad = new AlertDialog.Builder(ct);
                 View dialogView = getLayoutInflater().inflate(R.layout.add_list_dialog,null);
-                Context context = getActivity();
 
                 ad.setTitle("Challenge");
 
-                Spinner sp = (Spinner) view.findViewById(R.id.addListSp);
-                EditText ed = (EditText) view.findViewById(R.id.addLIstEd);
+                Spinner sp = (Spinner) dialogView.findViewById(R.id.addListSp);
+                EditText edCount = (EditText) dialogView.findViewById(R.id.addLIstCount);
+                EditText edItem = (EditText) dialogView.findViewById(R.id.addLIstItem);
 
-                ArrayAdapter ad_monthly = ArrayAdapter.createFromResource(context, R.array.monthly_array, android.R.layout.simple_spinner_item);
+                ArrayAdapter<CharSequence> ad_monthly = ArrayAdapter.createFromResource(getActivity(), R.array.monthly_array, android.R.layout.simple_spinner_item);
                 ad_monthly.setDropDownViewResource(android.R.layout.simple_spinner_item);
                 sp.setAdapter(ad_monthly);
 
                 ad.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String ed_val = ed.getText().toString();
+                        String ed_itemVal = edItem.getText().toString();
+                        String ed_countVal = edCount.getText().toString();
                         String sp_val = sp.getSelectedItem().toString();
 
                         //firebase로 값 넘기기
