@@ -3,6 +3,7 @@ package com.example.monthlychallenge;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,6 +44,64 @@ public class ChalListFragment extends Fragment {
     EditText ed_addList;
 
     Context ct;
+    // Todo
+    //  public SharedPreferences cnt = getSharedPreferences(2, Context.MODE_PRIVATE);
+    String TAG = "ChallListFragment";
+
+
+    public void dialog(View view){
+        AlertDialog.Builder ad = new AlertDialog.Builder(ct);
+        View dialogView = getLayoutInflater().inflate(R.layout.add_list_dialog,null);
+
+        ad.setTitle("Challenge");
+
+        Spinner sp = (Spinner) dialogView.findViewById(R.id.addListSp);
+        EditText edCount = (EditText) dialogView.findViewById(R.id.addLIstCount);
+        EditText edItem = (EditText) dialogView.findViewById(R.id.addLIstItem);
+
+        ArrayAdapter<CharSequence> ad_monthly = ArrayAdapter.createFromResource(getActivity(), R.array.monthly_array, android.R.layout.simple_spinner_item);
+        ad_monthly.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        sp.setAdapter(ad_monthly);
+
+        ad.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String ed_itemVal = edItem.getText().toString();
+                String ed_countVal = edCount.getText().toString();
+                String sp_val = sp.getSelectedItem().toString();
+                String img_val = "https://firebasestorage.googleapis.com/v0/b/monthlychallenge-fb8a3.appspot.com/o/20caf1d857530.jpg?alt=media&token=9ebb9be4-c883-4e42-b659-4dcc365c5abd";
+
+                //firebase로 입력받은 값 넘기기
+                final FirebaseDatabase db = FirebaseDatabase.getInstance();
+                DatabaseReference ref = db.getReference("challengeList");
+
+                Challenge add_List = new Challenge(sp_val, ed_countVal, ed_itemVal, img_val);
+                if(add_List != null){
+                    Log.i(TAG, "cnt " + cnt);
+                    String chalCnt = String.valueOf(cnt);
+                    ref.child(chalCnt).setValue(add_List);
+                }
+                else{
+                    Toast.makeText(getActivity(), "내용을 입력해주세요", Toast.LENGTH_SHORT).show();
+                    dialogInterface.dismiss();
+                }
+
+                cnt++;
+            }
+        });
+
+        ad.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        // 창띄우기
+        ad.setView(dialogView);
+        ad.create();
+        ad.show();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,48 +143,13 @@ public class ChalListFragment extends Fragment {
         recyclerView.setAdapter(adapter); //리사이클러뷰에 어댑터 연결
 
 
-
         // dialog
         btn_addList = view.findViewById(R.id.addList);
 
         btn_addList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder ad = new AlertDialog.Builder(ct);
-                View dialogView = getLayoutInflater().inflate(R.layout.add_list_dialog,null);
-
-                ad.setTitle("Challenge");
-
-                Spinner sp = (Spinner) dialogView.findViewById(R.id.addListSp);
-                EditText edCount = (EditText) dialogView.findViewById(R.id.addLIstCount);
-                EditText edItem = (EditText) dialogView.findViewById(R.id.addLIstItem);
-
-                ArrayAdapter<CharSequence> ad_monthly = ArrayAdapter.createFromResource(getActivity(), R.array.monthly_array, android.R.layout.simple_spinner_item);
-                ad_monthly.setDropDownViewResource(android.R.layout.simple_spinner_item);
-                sp.setAdapter(ad_monthly);
-
-                ad.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String ed_itemVal = edItem.getText().toString();
-                        String ed_countVal = edCount.getText().toString();
-                        String sp_val = sp.getSelectedItem().toString();
-
-                        //firebase로 값 넘기기
-                    }
-                });
-
-                ad.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-
-                // 창띄우기
-                ad.setView(dialogView);
-                ad.create();
-                ad.show();
+                dialog(view);
             }
         });
 
