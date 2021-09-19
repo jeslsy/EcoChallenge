@@ -1,5 +1,7 @@
 package com.example.monthlychallenge;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,6 +24,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class ChalListFragment extends Fragment {
+    String TAG = "ChallListFragment";
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -43,13 +48,13 @@ public class ChalListFragment extends Fragment {
     Spinner sp_addList;
     EditText ed_addList;
 
-    Context ct;
-    // Todo
-    //  public SharedPreferences cnt = getSharedPreferences(2, Context.MODE_PRIVATE);
-    String TAG = "ChallListFragment";
+    Context ct = getActivity();
+
+    int cnt=1;
 
 
     public void dialog(View view){
+
         AlertDialog.Builder ad = new AlertDialog.Builder(ct);
         View dialogView = getLayoutInflater().inflate(R.layout.add_list_dialog,null);
 
@@ -71,22 +76,38 @@ public class ChalListFragment extends Fragment {
                 String sp_val = sp.getSelectedItem().toString();
                 String img_val = "https://firebasestorage.googleapis.com/v0/b/monthlychallenge-fb8a3.appspot.com/o/20caf1d857530.jpg?alt=media&token=9ebb9be4-c883-4e42-b659-4dcc365c5abd";
 
+                Log.e(TAG, cnt + " " + sp_val + " " + ed_countVal + " " + ed_itemVal);
+
                 //firebase로 입력받은 값 넘기기
                 final FirebaseDatabase db = FirebaseDatabase.getInstance();
                 DatabaseReference ref = db.getReference("challengeList");
 
                 Challenge add_List = new Challenge(sp_val, ed_countVal, ed_itemVal, img_val);
-                if(add_List != null){
-                    Log.i(TAG, "cnt " + cnt);
+                if(ed_countVal != ""){
+                    cnt += 1;
                     String chalCnt = String.valueOf(cnt);
-                    ref.child(chalCnt).setValue(add_List);
+                    ref.child(chalCnt).setValue(add_List)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            showChalList(view);
+                            Log.e(TAG, "저장 성공");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e(TAG, "저장 실패");
+                        }
+                    });
+                    Log.e(TAG, "수행되었을지..");
                 }
                 else{
                     Toast.makeText(getActivity(), "내용을 입력해주세요", Toast.LENGTH_SHORT).show();
                     dialogInterface.dismiss();
                 }
 
-                cnt++;
+                adapter.notifyDataSetChanged();
             }
         });
 
@@ -103,13 +124,7 @@ public class ChalListFragment extends Fragment {
         ad.show();
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_chal_list, container, false);
-        ct = container.getContext();
-
+    public void showChalList(View view){
         recyclerView = view.findViewById(R.id.recyclerView); //아이디 연결
         recyclerView.setHasFixedSize(true); //리사이클러뷰 기존 성능 강화
         layoutManager = new LinearLayoutManager(ct);
@@ -127,6 +142,7 @@ public class ChalListFragment extends Fragment {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Challenge challenge = snapshot.getValue(Challenge.class); //Challenge 객체에 데이터 담기
                     arrayList.add(challenge);
+                    cnt++;
                 }
                 adapter.notifyDataSetChanged(); //리스트 저장 새로고침
             }
@@ -141,7 +157,16 @@ public class ChalListFragment extends Fragment {
 
         adapter = new ChalListAdapter(arrayList, ct);
         recyclerView.setAdapter(adapter); //리사이클러뷰에 어댑터 연결
+    }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_chal_list, container, false);
+        ct = container.getContext();
+
+        showChalList(view);
 
         // dialog
         btn_addList = view.findViewById(R.id.addList);
