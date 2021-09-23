@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,11 +51,7 @@ public class ChalListFragment extends Fragment {
 
     Context ct = getActivity();
 
-    int cnt=0;
-
-
-    public void dialog(View view){
-
+    private void dialog(View view){
         AlertDialog.Builder ad = new AlertDialog.Builder(ct);
         View dialogView = getLayoutInflater().inflate(R.layout.add_list_dialog,null);
 
@@ -75,36 +73,16 @@ public class ChalListFragment extends Fragment {
                 String sp_val = sp.getSelectedItem().toString();
                 String img_val = "https://firebasestorage.googleapis.com/v0/b/monthlychallenge-fb8a3.appspot.com/o/20caf1d857530.jpg?alt=media&token=9ebb9be4-c883-4e42-b659-4dcc365c5abd";
 
-                Log.e(TAG, cnt + " " + sp_val + " " + ed_countVal + " " + ed_itemVal);
+                Log.e(TAG,  sp_val + " " + ed_countVal + " " + ed_itemVal + " " + img_val);
 
-                //firebase로 입력받은 값 넘기기
-                Challenge add_List = new Challenge(sp_val, ed_countVal, ed_itemVal, img_val);
-
-                if(edItem.getText().toString().length() != 0 && edCount.getText().toString().length() != 0){
-
-                    // firebase에 데이터 저장
-                    cnt += 1;
-                    String chalCnt = String.valueOf(cnt);
-                    databaseReference.child(chalCnt).setValue(add_List)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Toast.makeText(getActivity(), "저장되었습니다.", Toast.LENGTH_SHORT).show();
-                            Log.e(TAG, "저장 성공");
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.e(TAG, "저장 실패");
-                        }
-                    });
+                if(ed_itemVal.length() != 0 && ed_countVal.length() != 0){
+                    //firebase로 입력받은 값 넘기기
+                    Challenge add_List = new Challenge(sp_val, ed_countVal, ed_itemVal, img_val);
+                    writeChalList(add_List, view);
                 }
                 else{
                     Toast.makeText(getActivity(), "내용을 입력해주세요", Toast.LENGTH_SHORT).show();
                 }
-
-                adapter.notifyDataSetChanged();
             }
         });
 
@@ -121,7 +99,27 @@ public class ChalListFragment extends Fragment {
         ad.show();
     }
 
-    public void showChalList(View view){
+    private void writeChalList(Challenge addList, View view){
+        // firebase에 데이터 저장
+        databaseReference.push().setValue(addList)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(getActivity(), "저장되었습니다.", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "저장 성공");
+                        readChalList(view);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getActivity(), "저장을 실패했습니다.", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "저장 실패");
+                    }
+                });
+    }
+
+    private void readChalList(View view){
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -131,7 +129,6 @@ public class ChalListFragment extends Fragment {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Challenge challenge = snapshot.getValue(Challenge.class); //Challenge 객체에 데이터 담기
                     arrayList.add(challenge);
-                    cnt++;
                 }
                 adapter.notifyDataSetChanged(); //리스트 저장 새로고침
             }
@@ -143,6 +140,8 @@ public class ChalListFragment extends Fragment {
                 Log.e("ChalListFragment", String.valueOf(error.toException()));
             }
         });
+
+        Log.e(TAG, "읽었다리");
 
         adapter = new ChalListAdapter(arrayList, ct);
         recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), 1));
@@ -162,8 +161,6 @@ public class ChalListFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         arrayList = new ArrayList<>(); //Challenge 담을 어레이 리스트 (어댑터 쪽으로 날림)
 
-        showChalList(view);
-
         // dialog
         btn_addList = view.findViewById(R.id.addList);
 
@@ -171,9 +168,11 @@ public class ChalListFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 dialog(view);
-                showChalList(view);
+                readChalList(view);
             }
         });
+
+        readChalList(view);
 
         // Inflate the layout for this fragment
         return view;

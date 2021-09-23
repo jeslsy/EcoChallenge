@@ -9,10 +9,10 @@ public class Challenge {
     public Challenge(){};
 
     public Challenge(String period, String count, String item, String success){
-        period = this.period;
-        count = this.count;
-        item = this.item;
-        success = this.success;
+        this.period = period;
+        this.count = count;
+        this.item = item;
+        this.success = success;
     };
 
     public String getPeriod() {

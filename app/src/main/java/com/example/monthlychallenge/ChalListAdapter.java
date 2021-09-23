@@ -41,7 +41,7 @@ public class ChalListAdapter extends RecyclerView.Adapter<ChalListAdapter.ChalLi
                 .load(arrayList.get(position).getSuccess())
                 .into(holder.iv_success); //이미지 받아오기
         holder.tv_period.setText(arrayList.get(position).getPeriod());
-        holder.tv_count.setText(String.valueOf(arrayList.get(position).getCount()));
+        holder.tv_count.setText(arrayList.get(position).getCount());
         holder.tv_item.setText(arrayList.get(position).getItem());
     }
 
