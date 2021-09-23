@@ -11,6 +11,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,16 +42,14 @@ public class ChalListFragment extends Fragment {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Challenge> arrayList;
-    private FirebaseDatabase database;
-    private DatabaseReference databaseReference;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = database.getReference("challengeList");
 
     Button btn_addList;
-    Spinner sp_addList;
-    EditText ed_addList;
 
     Context ct = getActivity();
 
-    int cnt=1;
+    int cnt=0;
 
 
     public void dialog(View view){
@@ -79,18 +78,18 @@ public class ChalListFragment extends Fragment {
                 Log.e(TAG, cnt + " " + sp_val + " " + ed_countVal + " " + ed_itemVal);
 
                 //firebase로 입력받은 값 넘기기
-                final FirebaseDatabase db = FirebaseDatabase.getInstance();
-                DatabaseReference ref = db.getReference("challengeList");
-
                 Challenge add_List = new Challenge(sp_val, ed_countVal, ed_itemVal, img_val);
-                if(ed_countVal != ""){
+
+                if(edItem.getText().toString().length() != 0 && edCount.getText().toString().length() != 0){
+
+                    // firebase에 데이터 저장
                     cnt += 1;
                     String chalCnt = String.valueOf(cnt);
-                    ref.child(chalCnt).setValue(add_List)
+                    databaseReference.child(chalCnt).setValue(add_List)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
-                            showChalList(view);
+                            Toast.makeText(getActivity(), "저장되었습니다.", Toast.LENGTH_SHORT).show();
                             Log.e(TAG, "저장 성공");
                         }
                     })
@@ -100,11 +99,9 @@ public class ChalListFragment extends Fragment {
                             Log.e(TAG, "저장 실패");
                         }
                     });
-                    Log.e(TAG, "수행되었을지..");
                 }
                 else{
                     Toast.makeText(getActivity(), "내용을 입력해주세요", Toast.LENGTH_SHORT).show();
-                    dialogInterface.dismiss();
                 }
 
                 adapter.notifyDataSetChanged();
@@ -125,15 +122,7 @@ public class ChalListFragment extends Fragment {
     }
 
     public void showChalList(View view){
-        recyclerView = view.findViewById(R.id.recyclerView); //아이디 연결
-        recyclerView.setHasFixedSize(true); //리사이클러뷰 기존 성능 강화
-        layoutManager = new LinearLayoutManager(ct);
-        recyclerView.setLayoutManager(layoutManager);
-        arrayList = new ArrayList<>(); //Challenge 담을 어레이 리스트 (어댑터 쪽으로 날림)
 
-        database = FirebaseDatabase.getInstance();
-
-        databaseReference = database.getReference("challengeList"); //디비 테이블 연결
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -156,6 +145,7 @@ public class ChalListFragment extends Fragment {
         });
 
         adapter = new ChalListAdapter(arrayList, ct);
+        recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), 1));
         recyclerView.setAdapter(adapter); //리사이클러뷰에 어댑터 연결
     }
 
@@ -166,6 +156,12 @@ public class ChalListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_chal_list, container, false);
         ct = container.getContext();
 
+        recyclerView = view.findViewById(R.id.recyclerView); //아이디 연결
+        recyclerView.setHasFixedSize(true); //리사이클러뷰 기존 성능 강화
+        layoutManager = new LinearLayoutManager(ct);
+        recyclerView.setLayoutManager(layoutManager);
+        arrayList = new ArrayList<>(); //Challenge 담을 어레이 리스트 (어댑터 쪽으로 날림)
+
         showChalList(view);
 
         // dialog
@@ -175,6 +171,7 @@ public class ChalListFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 dialog(view);
+                showChalList(view);
             }
         });
 
