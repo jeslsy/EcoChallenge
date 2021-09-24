@@ -1,15 +1,9 @@
 package com.example.monthlychallenge;
 
-import static android.content.Context.MODE_PRIVATE;
-
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,16 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,11 +28,9 @@ public class ChalListFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<Challenge> arrayList;
+    private ArrayList<Challenger> arrayList;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference databaseReference = database.getReference("challengeList");
-
-    Button btn_addList;
+    private DatabaseReference databaseReference = database.getReference("challenger");
 
     Context ct = getActivity();
 
@@ -59,8 +42,8 @@ public class ChalListFragment extends Fragment {
                 // 파이어베이스의 데이터 받아오는 곳
                 arrayList.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Challenge challenge = snapshot.getValue(Challenge.class); //Challenge 객체에 데이터 담기
-                    arrayList.add(challenge);
+                    Challenger challenger = snapshot.getValue(Challenger.class); //Challenger 객체에 데이터 담기
+                    arrayList.add(challenger);
                 }
                 adapter.notifyDataSetChanged(); //리스트 저장 새로고침
             }

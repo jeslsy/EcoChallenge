@@ -16,10 +16,10 @@ import java.util.ArrayList;
 
 public class ChalListAdapter extends RecyclerView.Adapter<ChalListAdapter.ChalListViewHolder> {
 
-    private ArrayList<Challenge> arrayList;
+    private ArrayList<Challenger> arrayList;
     private Context context;
 
-    public ChalListAdapter(ArrayList<Challenge> arrayList, Context context) {
+    public ChalListAdapter(ArrayList<Challenger> arrayList, Context context) {
         this.arrayList = arrayList;
         this.context = context;
     }
@@ -40,9 +40,9 @@ public class ChalListAdapter extends RecyclerView.Adapter<ChalListAdapter.ChalLi
         Glide.with(holder.itemView)
                 .load(arrayList.get(position).getSuccess())
                 .into(holder.iv_success); //이미지 받아오기
-        holder.tv_period.setText(arrayList.get(position).getPeriod());
         holder.tv_count.setText(arrayList.get(position).getCount());
-        holder.tv_item.setText(arrayList.get(position).getItem());
+        holder.tv_id.setText(arrayList.get(position).getId());
+        holder.tv_goal.setText(arrayList.get(position).getGoal());
     }
 
     @Override
@@ -53,16 +53,16 @@ public class ChalListAdapter extends RecyclerView.Adapter<ChalListAdapter.ChalLi
     public class ChalListViewHolder extends RecyclerView.ViewHolder {
         //chal_item에서 만든거 불러오기
         ImageView iv_success;
-        TextView tv_period;
+        TextView tv_id;
         TextView tv_count;
-        TextView tv_item;
+        TextView tv_goal;
 
         public ChalListViewHolder(@NonNull View itemView) {
             super(itemView);
             this.iv_success = itemView.findViewById(R.id.iv_success);
             this.tv_count = itemView.findViewById(R.id.tv_count);
-            this.tv_period = itemView.findViewById(R.id.tv_period);
-            this.tv_item = itemView.findViewById(R.id.tv_item);
+            this.tv_id = itemView.findViewById(R.id.tv_id);
+            this.tv_goal = itemView.findViewById(R.id.tv_goal);
         }
     }
 }
