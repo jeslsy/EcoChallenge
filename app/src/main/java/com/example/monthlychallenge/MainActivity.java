@@ -11,6 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
     Fragment chalListFragment;
+    Fragment homeFragment;
 
 
     @Override
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         chalListFragment = new ChalListFragment();
+        homeFragment = new HomeFragment();
 
         //기본 시작 화면 getSupportFragmentManager().beginTransaction().replace(R.id.container, chal).commit();
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navi);
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.challenge_btn:
                         return true;
                     case R.id.Home_btn:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frame, homeFragment).commit();
                         return true;
                 }
                 return false;

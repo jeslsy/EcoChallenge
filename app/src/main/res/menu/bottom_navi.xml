@@ -13,8 +13,7 @@
         android:enabled="true"
         android:title="challenge"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/calendar_icon"
-        />
+        android:icon="@drawable/calendar_icon" />
 
     <item
         android:id="@+id/List_bnt"
