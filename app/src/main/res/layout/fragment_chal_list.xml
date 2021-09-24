@@ -20,17 +20,6 @@
             android:layout_margin="10dp"
             android:textColor="@color/black" />
 
-        <Button
-            android:id="@+id/addList"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_gravity="end"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/add_bnt"
-            android:text="+"
-            android:textSize="20dp"
-            android:textColor="#FFFFFF"/>
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
