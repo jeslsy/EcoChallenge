@@ -16,15 +16,73 @@
             android:layout_height="wrap_content"
             android:text="Challengers"
             android:layout_gravity="center"
-            android:textSize="45dp"
+            android:textSize="40dp"
             android:layout_margin="10dp"
             android:textColor="@color/black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/rectangle"
+            android:layout_marginHorizontal="20dp"
+            android:padding="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Challenge"
+                android:layout_gravity="center"
+                android:textSize="25dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/kb3" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="My Goal : "
+                    android:textSize="20dp"
+                    android:textColor="@color/black" />
+                <TextView
+                    android:id="@+id/myGoal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="My Challenge"
+                    android:textSize="20dp"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Current Progress : "
+                    android:textSize="20dp"
+                    android:textColor="@color/black" />
+                <TextView
+                    android:id="@+id/currentProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="My Challenge"
+                    android:textSize="20dp"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_margin="20dp"
             android:background="@drawable/rectangle"/>
 
     </LinearLayout>

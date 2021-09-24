@@ -1,6 +1,7 @@
 package com.example.monthlychallenge;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,6 +46,8 @@ public class ChalListFragment extends Fragment {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Challenger challenger = snapshot.getValue(Challenger.class); //Challenger 객체에 데이터 담기
                     arrayList.add(challenger);
+                    // todo
+                    // if(challenger.getId() == )
                 }
                 adapter.notifyDataSetChanged(); //리스트 저장 새로고침
             }
@@ -59,7 +63,6 @@ public class ChalListFragment extends Fragment {
         Log.e(TAG, "읽었다리");
 
         adapter = new ChalListAdapter(arrayList, ct);
-        recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), 1));
         recyclerView.setAdapter(adapter); //리사이클러뷰에 어댑터 연결
     }
 
@@ -77,6 +80,10 @@ public class ChalListFragment extends Fragment {
         arrayList = new ArrayList<>(); //Challenge 담을 어레이 리스트 (어댑터 쪽으로 날림)
 
         readChalList(view);
+
+        // id, currentProgress 값 넘겨받기
+        TextView tv_currentProgress = view.findViewById(R.id.currentProgress);
+        // Intent intent = getIntent();
 
         // Inflate the layout for this fragment
         return view;

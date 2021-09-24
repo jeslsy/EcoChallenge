@@ -13,7 +13,9 @@
         <entry key="..\:/Users/ekffk/AndroidStudioProjects/MonthlyChallenge/app/src/main/res/drawable/ic_add.xml" value="0.26564102564102565" />
         <entry key="..\:/Users/ekffk/AndroidStudioProjects/MonthlyChallenge/app/src/main/res/drawable/ic_launcher_background.xml" value="0.26564102564102565" />
         <entry key="..\:/Users/ekffk/AndroidStudioProjects/MonthlyChallenge/app/src/main/res/drawable/list_icon.xml" value="0.24351851851851852" />
+        <entry key="..\:/Users/ekffk/AndroidStudioProjects/MonthlyChallenge/app/src/main/res/drawable/listview_back.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/ekffk/AndroidStudioProjects/MonthlyChallenge/app/src/main/res/drawable/rectangle.xml" value="0.26564102564102565" />
+        <entry key="..\:/Users/ekffk/AndroidStudioProjects/MonthlyChallenge/app/src/main/res/drawable/recyclerviewItem.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/ekffk/AndroidStudioProjects/MonthlyChallenge/app/src/main/res/drawable/round_square.xml" value="0.26564102564102565" />
         <entry key="..\:/Users/ekffk/AndroidStudioProjects/MonthlyChallenge/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/ekffk/AndroidStudioProjects/MonthlyChallenge/app/src/main/res/layout/add_list_dialog.xml" value="0.2" />
@@ -23,7 +25,7 @@
         <entry key="..\:/Users/ekffk/AndroidStudioProjects/MonthlyChallenge/app/src/main/res/layout/chal_list_item.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/ekffk/AndroidStudioProjects/MonthlyChallenge/app/src/main/res/layout/chel_list.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/ekffk/AndroidStudioProjects/MonthlyChallenge/app/src/main/res/layout/chel_list_item.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/ekffk/AndroidStudioProjects/MonthlyChallenge/app/src/main/res/layout/fragment_chal_list.xml" value="0.1" />
+        <entry key="..\:/Users/ekffk/AndroidStudioProjects/MonthlyChallenge/app/src/main/res/layout/fragment_chal_list.xml" value="0.264" />
         <entry key="..\:/Users/ekffk/AndroidStudioProjects/MonthlyChallenge/app/src/main/res/layout/fragment_fragment3_chal_list.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/ekffk/AndroidStudioProjects/MonthlyChallenge/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/Users/ekffk/AndroidStudioProjects/MonthlyChallenge/app/src/main/res/menu/bottom_navi.xml" value="0.2390625" />
