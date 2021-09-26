@@ -35,6 +35,12 @@ public class ChalListFragment extends Fragment {
     private DatabaseReference databaseReference = database.getReference("challenger");
 
     Context ct = getActivity();
+    String userId;
+    String currentProgress;
+    String myGoal;
+
+    TextView tv_goal;
+    TextView tv_currentProgress;
 
     private void readChalList(View view){
 
@@ -46,8 +52,8 @@ public class ChalListFragment extends Fragment {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Challenger challenger = snapshot.getValue(Challenger.class); //Challenger 객체에 데이터 담기
                     arrayList.add(challenger);
-                    // todo
-                    // if(challenger.getId() == )
+                    // TODO: 2021-09-26  
+                    // if(challenger.getId() == userId){ currentProgress = challenger.getCount(); myGoal = challenger.getGoal(); }
                 }
                 adapter.notifyDataSetChanged(); //리스트 저장 새로고침
             }
@@ -82,9 +88,15 @@ public class ChalListFragment extends Fragment {
         readChalList(view);
 
         // id, currentProgress 값 넘겨받기
-        TextView tv_currentProgress = view.findViewById(R.id.currentProgress);
+        tv_currentProgress = view.findViewById(R.id.currentProgress);
+        tv_goal = view.findViewById(R.id.myGoal);
+
+        tv_currentProgress.setText(currentProgress);
+        tv_goal.setText(myGoal);
         // Intent intent = getIntent();
 
+        // TODO: 2021-09-26 목표 성공시 이미지 변경해주기! 
+        
         // Inflate the layout for this fragment
         return view;
     }
