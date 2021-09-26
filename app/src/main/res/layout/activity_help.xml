@@ -15,7 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="15dp"
             android:background="@drawable/rectangle"
             android:orientation="vertical"
             android:padding="10dp">
@@ -26,14 +26,15 @@
                 android:layout_gravity="center"
                 android:text="Challenge 방법"
                 android:textColor="@color/kb4"
-                android:textSize="20dp" />
+                android:textSize="30dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="10dp"
-                android:text="1. 이번달에 수행할 수 있는 활동 횟수를 지정한다.\n2. 그 날 활동한 내용을 달력에 입력해 저장한다." />
+                android:layout_margin="5dp"
+                android:textSize="16dp"
+                android:text="1. 이번달에 수행할 수 있는 활동 횟수를 지정한다.\n2. 그 날 활동한 내용을 달력에 입력해 저장한다.\n3. 수행 결과에 따라 아래와 같은 이미지가 표시된다." />
 
             <TableLayout
                 android:layout_width="wrap_content"
@@ -66,12 +67,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
-                        android:text="Challenge 수행중" />
+                        android:text="Challenge 수행중"
+                        android:textColor="@color/black"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Challenge 성공"/>
+                        android:text="Challenge 성공"
+                        android:textColor="@color/black"/>
+
                 </TableRow>
             </TableLayout>
 
@@ -81,9 +85,34 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/rectangle"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Challenge 예시"
+                android:textColor="@color/kb4"
+                android:textSize="30dp" />
+
+            <ListView
+                android:id="@+id/exList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/listview_back" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
