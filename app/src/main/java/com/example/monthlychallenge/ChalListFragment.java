@@ -52,7 +52,7 @@ public class ChalListFragment extends Fragment {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Challenger challenger = snapshot.getValue(Challenger.class); //Challenger 객체에 데이터 담기
                     arrayList.add(challenger);
-                    // TODO: 2021-09-26  
+                    // TODO: 2021-09-26
                     // if(challenger.getId() == userId){ currentProgress = challenger.getCount(); myGoal = challenger.getGoal(); }
                 }
                 adapter.notifyDataSetChanged(); //리스트 저장 새로고침
