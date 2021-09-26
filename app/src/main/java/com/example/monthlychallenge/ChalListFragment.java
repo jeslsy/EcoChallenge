@@ -38,9 +38,26 @@ public class ChalListFragment extends Fragment {
     String userId;
     String currentProgress;
     String myGoal;
+    String im_inchal="https://firebasestorage.googleapis.com/v0/b/monthlychallenge-fb8a3.appspot.com/o/Inchallenge.png?alt=media&token=86bce698-036e-4089-b69c-696eaa1fc60c";
+    String im_suc="https://firebasestorage.googleapis.com/v0/b/monthlychallenge-fb8a3.appspot.com/o/success.png?alt=media&token=3542eebb-3627-4eab-9843-774a0e4afb43";
 
     TextView tv_goal;
     TextView tv_currentProgress;
+
+    private void writeChalList(View view){
+        databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Challenger challenger = new Challenger(userId, currentProgress, myGoal, im_inchal);
+                databaseReference.setValue(challenger);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     private void readChalList(View view){
 
@@ -93,6 +110,8 @@ public class ChalListFragment extends Fragment {
 
         tv_currentProgress.setText(currentProgress);
         tv_goal.setText(myGoal);
+
+        // TODO: 2021-09-26 넘겨받은 아이디 목표 저장해주기 -> writeChalList 
         // Intent intent = getIntent();
 
         // TODO: 2021-09-26 목표 성공시 이미지 변경해주기! 
