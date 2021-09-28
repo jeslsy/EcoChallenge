@@ -46,21 +46,21 @@ public class ChalListFragment extends Fragment {
     TextView tv_goal;
     TextView tv_currentProgress;
 
-    // 사용자 챌린지 DB에 저장하기
-    private void writeChalList(){
-        databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Challenger challenger = new Challenger(userId, currentProgress, myGoal, im_inchal);
-                databaseReference.setValue(challenger);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
+//    // 사용자 챌린지 DB에 저장하기
+//    private void writeChalList(){
+//        databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                Challenger challenger = new Challenger(userId, currentProgress, myGoal, im_inchal);
+//                databaseReference.setValue(challenger);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
 
     // Challenger들 데이터 가져오기
     private void readChalList(){
@@ -114,7 +114,7 @@ public class ChalListFragment extends Fragment {
 
         // TODO: 2021-09-26 넘겨받은 아이디 목표 저장해주기 -> writeChalList
         // Intent intent = getIntent();
-        writeChalList();
+        //writeChalList();
 
         readChalList();
 
@@ -127,20 +127,20 @@ public class ChalListFragment extends Fragment {
 
 
 
-        // TODO: 2021-09-26 목표 성공시 이미지 변경해주기!
-        if(Integer.valueOf(myGoal) == Integer.valueOf(currentProgress)){
-            databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Challenger challenger = new Challenger(userId, currentProgress, myGoal, im_suc);
-                    databaseReference.setValue(challenger);
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
+////        // TODO: 2021-09-26 목표 성공시 이미지 변경해주기!
+//        if(Integer.valueOf(myGoal) == Integer.valueOf(currentProgress)){
+//            databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    Challenger challenger = new Challenger(userId, currentProgress, myGoal, im_suc);
+//                    databaseReference.setValue(challenger);
+//                }
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                }
+//            });
+//        }
 
         
         // Inflate the layout for this fragment
