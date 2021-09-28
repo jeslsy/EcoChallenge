@@ -35,6 +35,8 @@ public class ChalListFragment extends Fragment {
     private DatabaseReference databaseReference = database.getReference("challenger");
 
     Context ct = getActivity();
+
+    Challenger user;
     String userId;
     String currentProgress;
     String myGoal;
@@ -44,7 +46,8 @@ public class ChalListFragment extends Fragment {
     TextView tv_goal;
     TextView tv_currentProgress;
 
-    private void writeChalList(View view){
+    // 사용자 챌린지 DB에 저장하기
+    private void writeChalList(){
         databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -59,7 +62,8 @@ public class ChalListFragment extends Fragment {
         });
     }
 
-    private void readChalList(View view){
+    // Challenger들 데이터 가져오기
+    private void readChalList(){
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -69,8 +73,14 @@ public class ChalListFragment extends Fragment {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Challenger challenger = snapshot.getValue(Challenger.class); //Challenger 객체에 데이터 담기
                     arrayList.add(challenger);
-                    // TODO: 2021-09-26
-                    // if(challenger.getId() == userId){ currentProgress = challenger.getCount(); myGoal = challenger.getGoal(); }
+
+                    // TODO: 2021-09-26 사용자 데이터 따로 저장
+//                    if(challenger.getId() == userId){
+//                        user.setId(userId);
+//                        user.setCount(challenger.getCount());
+//                        user.setGoal(challenger.getGoal());
+//                        user.setSuccess(challenger.getSuccess());
+//                    }
                 }
                 adapter.notifyDataSetChanged(); //리스트 저장 새로고침
             }
@@ -83,7 +93,7 @@ public class ChalListFragment extends Fragment {
             }
         });
 
-        Log.e(TAG, "읽었다리");
+        Log.e(TAG, "읽었다");
 
         adapter = new ChalListAdapter(arrayList, ct);
         recyclerView.setAdapter(adapter); //리사이클러뷰에 어댑터 연결
@@ -102,7 +112,11 @@ public class ChalListFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         arrayList = new ArrayList<>(); //Challenge 담을 어레이 리스트 (어댑터 쪽으로 날림)
 
-        readChalList(view);
+        // TODO: 2021-09-26 넘겨받은 아이디 목표 저장해주기 -> writeChalList
+        // Intent intent = getIntent();
+        writeChalList();
+
+        readChalList();
 
         // id, currentProgress 값 넘겨받기
         tv_currentProgress = view.findViewById(R.id.currentProgress);
@@ -111,10 +125,23 @@ public class ChalListFragment extends Fragment {
         tv_currentProgress.setText(currentProgress);
         tv_goal.setText(myGoal);
 
-        // TODO: 2021-09-26 넘겨받은 아이디 목표 저장해주기 -> writeChalList 
-        // Intent intent = getIntent();
 
-        // TODO: 2021-09-26 목표 성공시 이미지 변경해주기! 
+
+        // TODO: 2021-09-26 목표 성공시 이미지 변경해주기!
+        if(Integer.valueOf(myGoal) == Integer.valueOf(currentProgress)){
+            databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Challenger challenger = new Challenger(userId, currentProgress, myGoal, im_suc);
+                    databaseReference.setValue(challenger);
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+
         
         // Inflate the layout for this fragment
         return view;
