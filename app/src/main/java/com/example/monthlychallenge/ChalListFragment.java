@@ -40,13 +40,14 @@ public class ChalListFragment extends Fragment {
     String userId;
     String currentProgress;
     String myGoal;
+
     String im_inchal="https://firebasestorage.googleapis.com/v0/b/monthlychallenge-fb8a3.appspot.com/o/Inchallenge.png?alt=media&token=86bce698-036e-4089-b69c-696eaa1fc60c";
     String im_suc="https://firebasestorage.googleapis.com/v0/b/monthlychallenge-fb8a3.appspot.com/o/success.png?alt=media&token=3542eebb-3627-4eab-9843-774a0e4afb43";
 
     TextView tv_goal;
     TextView tv_currentProgress;
 
-//    // 사용자 챌린지 DB에 저장하기
+      // 사용자 챌린지 DB에 저장하기
 //    private void writeChalList(){
 //        databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
 //            @Override
@@ -82,7 +83,6 @@ public class ChalListFragment extends Fragment {
 //                        user.setSuccess(challenger.getSuccess());
 //                    }
                 }
-                adapter.notifyDataSetChanged(); //리스트 저장 새로고침
             }
             // 파이어베이스 데이터를 Challenge 클래스에 넣어주고 이를 arrayList에 넣어 Adapter에 쏘는 로직
 
@@ -112,28 +112,21 @@ public class ChalListFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         arrayList = new ArrayList<>(); //Challenge 담을 어레이 리스트 (어댑터 쪽으로 날림)
 
-        // TODO: 2021-09-26 넘겨받은 아이디 목표 저장해주기 -> writeChalList
-        // Intent intent = getIntent();
-        //writeChalList();
+        // 회원가입 후 사용자 데이터 받기 -> join에서 해버리는게 나을지도
 
         readChalList();
 
-        // id, currentProgress 값 넘겨받기
-        tv_currentProgress = view.findViewById(R.id.currentProgress);
-        tv_goal = view.findViewById(R.id.myGoal);
+        // 사용자 데이터 저장
+        // writeChalList();
 
-        tv_currentProgress.setText(currentProgress);
-        tv_goal.setText(myGoal);
-
-
-
-////        // TODO: 2021-09-26 목표 성공시 이미지 변경해주기!
+        // 목표 성공시 이미지 변경
 //        if(Integer.valueOf(myGoal) == Integer.valueOf(currentProgress)){
 //            databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
 //                @Override
 //                public void onDataChange(@NonNull DataSnapshot snapshot) {
 //                    Challenger challenger = new Challenger(userId, currentProgress, myGoal, im_suc);
 //                    databaseReference.setValue(challenger);
+//                    user.setSuccess(im_suc);
 //                }
 //                @Override
 //                public void onCancelled(@NonNull DatabaseError error) {
@@ -142,6 +135,25 @@ public class ChalListFragment extends Fragment {
 //            });
 //        }
 
+        // TODO: 2021-09-26 넘겨받은 아이디 목표 저장해주기 -> writeChalList
+
+
+
+
+
+
+
+        // id, currentProgress 값 세팅해주기기
+       tv_currentProgress = view.findViewById(R.id.currentProgress);
+        tv_goal = view.findViewById(R.id.myGoal);
+
+        tv_currentProgress.setText(currentProgress);
+        tv_goal.setText(myGoal);
+
+
+
+
+        adapter.notifyDataSetChanged(); //리스트 저장 새로고침
         
         // Inflate the layout for this fragment
         return view;
