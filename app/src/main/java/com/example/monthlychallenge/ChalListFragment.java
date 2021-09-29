@@ -137,21 +137,12 @@ public class ChalListFragment extends Fragment {
 
         // TODO: 2021-09-26 넘겨받은 아이디 목표 저장해주기 -> writeChalList
 
-
-
-
-
-
-
         // id, currentProgress 값 세팅해주기기
        tv_currentProgress = view.findViewById(R.id.currentProgress);
         tv_goal = view.findViewById(R.id.myGoal);
 
         tv_currentProgress.setText(currentProgress);
         tv_goal.setText(myGoal);
-
-
-
 
         adapter.notifyDataSetChanged(); //리스트 저장 새로고침
         

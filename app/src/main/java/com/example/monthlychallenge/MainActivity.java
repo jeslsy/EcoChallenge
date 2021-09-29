@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         //chalFragment = new chalFragment();
 
         //기본 시작 화면
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, chalFragment).commit();
+        // getSupportFragmentManager().beginTransaction().replace(R.id.container, chalFragment).commit();
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navi);
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
