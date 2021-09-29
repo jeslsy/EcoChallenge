@@ -36,8 +36,8 @@ public class ChalListFragment extends Fragment {
 
     Context ct = getActivity();
 
-    Challenger user;
-    String userId;
+    Challenger user; // firebase에 저장된 사용자 정보 저장
+    String userId; // 넘겨받은 닉네임
     String currentProgress;
     String myGoal;
 
@@ -83,6 +83,7 @@ public class ChalListFragment extends Fragment {
 //                        user.setSuccess(challenger.getSuccess());
 //                    }
                 }
+                adapter.notifyDataSetChanged();
             }
             // 파이어베이스 데이터를 Challenge 클래스에 넣어주고 이를 arrayList에 넣어 Adapter에 쏘는 로직
 
@@ -94,7 +95,6 @@ public class ChalListFragment extends Fragment {
         });
 
         Log.e(TAG, "읽었다");
-
         adapter = new ChalListAdapter(arrayList, ct);
         recyclerView.setAdapter(adapter); //리사이클러뷰에 어댑터 연결
     }
@@ -111,8 +111,6 @@ public class ChalListFragment extends Fragment {
         layoutManager = new LinearLayoutManager(ct);
         recyclerView.setLayoutManager(layoutManager);
         arrayList = new ArrayList<>(); //Challenge 담을 어레이 리스트 (어댑터 쪽으로 날림)
-
-        // 회원가입 후 사용자 데이터 받기 -> join에서 해버리는게 나을지도
 
         readChalList();
 
@@ -133,18 +131,17 @@ public class ChalListFragment extends Fragment {
 //
 //                }
 //            });
+//            readChalList();
 //        }
 
         // TODO: 2021-09-26 넘겨받은 아이디 목표 저장해주기 -> writeChalList
 
         // id, currentProgress 값 세팅해주기기
-       tv_currentProgress = view.findViewById(R.id.currentProgress);
+        tv_currentProgress = view.findViewById(R.id.currentProgress);
         tv_goal = view.findViewById(R.id.myGoal);
 
         tv_currentProgress.setText(currentProgress);
         tv_goal.setText(myGoal);
-
-        adapter.notifyDataSetChanged(); //리스트 저장 새로고침
         
         // Inflate the layout for this fragment
         return view;
