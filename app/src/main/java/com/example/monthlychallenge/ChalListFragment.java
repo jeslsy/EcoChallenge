@@ -112,12 +112,13 @@ public class ChalListFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         arrayList = new ArrayList<>(); //Challenge 담을 어레이 리스트 (어댑터 쪽으로 날림)
 
+        // firebase에 등록된 유저들 데이터 가져오기
         readChalList();
 
-        // 사용자 데이터 저장
+        // 넘겨받은 사용자 데이터 저장
         // writeChalList();
 
-        // 목표 성공시 이미지 변경
+        // 목표 성공시 이미지 변경 후 firebase에 등록
 //        if(Integer.valueOf(myGoal) == Integer.valueOf(currentProgress)){
 //            databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
 //                @Override
@@ -134,9 +135,8 @@ public class ChalListFragment extends Fragment {
 //            readChalList();
 //        }
 
-        // TODO: 2021-09-26 넘겨받은 아이디 목표 저장해주기 -> writeChalList
 
-        // id, currentProgress 값 세팅해주기기
+        // 사용자의 현재 goal, currentProgress 값 세팅해주기기
         tv_currentProgress = view.findViewById(R.id.currentProgress);
         tv_goal = view.findViewById(R.id.myGoal);
 
