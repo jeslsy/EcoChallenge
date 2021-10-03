@@ -47,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame, chalListFragment).commit();
                         return true;
                     case R.id.challenge_btn:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frame, recodeFragment).commit();
+                        Intent cal_intent = new Intent(MainActivity.this, CalActivity.class);
+                        cal_intent.putExtra("userID", userID);
+                        startActivity(cal_intent);
                         return true;
                     case R.id.Home_btn:
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame, homeFragment).commit();

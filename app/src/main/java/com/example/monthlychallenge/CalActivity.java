@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -21,6 +22,7 @@ import java.io.FileOutputStream;
 
 public class CalActivity extends AppCompatActivity {
 
+    public Integer cnt = 0;
     public String fname=null;
     public String str=null;
     public CalendarView calendarView;
@@ -33,6 +35,8 @@ public class CalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cal);
 
+
+
         calendarView=findViewById(R.id.calendarView);
         diaryTextView=findViewById(R.id.diaryTextView);
         save_Btn=findViewById(R.id.save_Btn);
@@ -42,10 +46,13 @@ public class CalActivity extends AppCompatActivity {
         textView3=findViewById(R.id.textView3);
         contextEditText=findViewById(R.id.contextEditText);
 
-        //로그인 및 회원가입 엑티비티에서 이름을 받아옴
+
+        // Main 엑티비티에서 email을 받아옴
         Intent intent=getIntent();
         final String userID=intent.getStringExtra("userID");
         textView3.setText("< "+userID+"님의 Challenge >");
+
+
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -144,6 +151,7 @@ public class CalActivity extends AppCompatActivity {
         try{
             fos=openFileOutput(readDay,MODE_NO_LOCALIZED_COLLATORS);
             String content="";
+            cnt--;
             fos.write((content).getBytes());
             fos.close();
 
@@ -158,6 +166,7 @@ public class CalActivity extends AppCompatActivity {
         try{
             fos=openFileOutput(readDay,MODE_NO_LOCALIZED_COLLATORS);
             String content=contextEditText.getText().toString();
+            cnt++;
             fos.write((content).getBytes());
             fos.close();
         }catch (Exception e){
