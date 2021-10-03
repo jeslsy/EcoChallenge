@@ -25,6 +25,7 @@
         </activity>
         <activity android:name=".JoinActivity"/>
         <activity android:name=".MainActivity"/>
+        <activity android:name=".CalActivity"/>
     </application>
 
 </manifest>
