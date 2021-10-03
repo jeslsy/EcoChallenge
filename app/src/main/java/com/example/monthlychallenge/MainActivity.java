@@ -18,7 +18,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
     Fragment chalListFragment;
     Fragment homeFragment;
-    Fragment recodeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
         chalListFragment = new ChalListFragment();
         homeFragment = new HomeFragment();
-        recodeFragment = new RecodeFragment();
 
         //기본 시작 화면
         getSupportFragmentManager().beginTransaction().replace(R.id.frame, homeFragment).commit();
