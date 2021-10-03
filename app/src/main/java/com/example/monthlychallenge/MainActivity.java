@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
         homeFragment = new HomeFragment();
         recodeFragment = new RecodeFragment();
 
-        //기본 시작 화면 getSupportFragmentManager().beginTransaction().replace(R.id.container, chal).commit();
+        //기본 시작 화면
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame, homeFragment).commit();
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navi);
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
