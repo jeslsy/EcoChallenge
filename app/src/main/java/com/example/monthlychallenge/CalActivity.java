@@ -31,8 +31,8 @@ import java.io.StreamTokenizer;
 public class CalActivity extends AppCompatActivity {
 
     public Integer cnt = 0;
-    public String fname=null;
-    public String str=null;
+    public String fname = null;
+    public String str = null;
     public CalendarView calendarView;
     public Button cha_Btn,del_Btn,save_Btn, back_Btn;
     public TextView diaryTextView,textView2,textView3;
@@ -45,6 +45,7 @@ public class CalActivity extends AppCompatActivity {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = database.getReference("challenger");
     String im_inchal="https://firebasestorage.googleapis.com/v0/b/monthlychallenge-fb8a3.appspot.com/o/Inchallenge.png?alt=media&token=86bce698-036e-4089-b69c-696eaa1fc60c";
+    String im_suc="https://firebasestorage.googleapis.com/v0/b/monthlychallenge-fb8a3.appspot.com/o/success.png?alt=media&token=3542eebb-3627-4eab-9843-774a0e4afb43";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +117,15 @@ public class CalActivity extends AppCompatActivity {
                 String currentProgress = String.valueOf(cnt);
                 String myGoal = "0";
                 String userId = userID.substring(0, userID.indexOf("@"));
-                Challenger challenger = new Challenger(userId, currentProgress, myGoal, im_inchal);
+
+                Challenger challenger;
+                // 목표 성공시 이미지 변경 후 firebase에 등록
+                if(Integer.valueOf(myGoal) == Integer.valueOf(currentProgress)){
+                    challenger = new Challenger(userId, currentProgress, myGoal, im_suc);
+                }
+                else{
+                    challenger = new Challenger(userId, currentProgress, myGoal, im_inchal);
+                }
                 databaseReference.child(userId).setValue(challenger);
             }
 

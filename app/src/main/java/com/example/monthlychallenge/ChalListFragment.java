@@ -35,8 +35,6 @@ public class ChalListFragment extends Fragment {
     private DatabaseReference databaseReference = database.getReference("challenger");
 
     Context ct = getActivity();
-
-    Challenger user; // firebase에 저장된 사용자 정보 저장
     String userId;
     String currentProgress;
     String myGoal;
@@ -74,14 +72,6 @@ public class ChalListFragment extends Fragment {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Challenger challenger = snapshot.getValue(Challenger.class); //Challenger 객체에 데이터 담기
                     arrayList.add(challenger);
-
-                    // TODO: 2021-09-26 사용자 데이터 따로 저장
-//                    if(challenger.getId() == userId){
-//                        user.setId(userId);
-//                        user.setCount(challenger.getCount());
-//                        user.setGoal(challenger.getGoal());
-//                        user.setSuccess(challenger.getSuccess());
-//                    }
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -120,23 +110,6 @@ public class ChalListFragment extends Fragment {
 
         // firebase에 등록된 유저들 데이터 가져오기
         readChalList();
-
-        // 목표 성공시 이미지 변경 후 firebase에 등록
-//        if(Integer.valueOf(myGoal) == Integer.valueOf(currentProgress)){
-//            databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    Challenger challenger = new Challenger(userId, currentProgress, myGoal, im_suc);
-//                    databaseReference.setValue(challenger);
-//                    user.setSuccess(im_suc);
-//                }
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                }
-//            });
-//            readChalList();
-//        }
         
         // Inflate the layout for this fragment
         return view;
