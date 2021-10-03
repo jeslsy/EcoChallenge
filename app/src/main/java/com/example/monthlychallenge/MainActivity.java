@@ -3,6 +3,7 @@ package com.example.monthlychallenge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         // 로그인에서 id가지고 넘어옴
         Intent mIntent = getIntent();
@@ -46,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.List_bnt:
+                        // chaList로 id 전송
+                        Bundle bundle = new Bundle();
+                        bundle.putString("userId", userID);
+                        chalListFragment.setArguments(bundle);
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frame, chalListFragment);
+                        transaction.commit();
+
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame, chalListFragment).commit();
                         return true;
                     case R.id.challenge_btn:

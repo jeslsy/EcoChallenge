@@ -2,6 +2,8 @@ package com.example.monthlychallenge;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -15,8 +17,15 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.StreamTokenizer;
 
 
 public class CalActivity extends AppCompatActivity {
@@ -28,6 +37,14 @@ public class CalActivity extends AppCompatActivity {
     public Button cha_Btn,del_Btn,save_Btn, back_Btn;
     public TextView diaryTextView,textView2,textView3;
     public EditText contextEditText;
+
+    TextView tv_currentProgress;
+    TextView tv_goal;
+    String userID;
+
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = database.getReference("challenger");
+    String im_inchal="https://firebasestorage.googleapis.com/v0/b/monthlychallenge-fb8a3.appspot.com/o/Inchallenge.png?alt=media&token=86bce698-036e-4089-b69c-696eaa1fc60c";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +63,7 @@ public class CalActivity extends AppCompatActivity {
 
         //로그인 및 회원가입 엑티비티에서 이름을 받아옴
         Intent intent=getIntent();
-        final String userID=intent.getStringExtra("userID");
+        userID = intent.getStringExtra("userID");
         textView3.setText("< "+userID+"님의 Challenge >");
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -80,16 +97,42 @@ public class CalActivity extends AppCompatActivity {
         back_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent_to_main = new Intent(CalActivity.this, MainActivity.class);
                 intent_to_main.putExtra("cnt", cnt);
                 startActivity(intent_to_main);
+
+                writeChalList();
 
                 finish();
             }
         });
 
-//
+        // 사용자의 현재 goal, currentProgress 값 세팅해주기기
+        tv_currentProgress = findViewById(R.id.currentProgress);
+        tv_goal = findViewById(R.id.myGoal);
+
+        // tv_currentProgress.setText(String.valueOf(cnt));
+        // Todo tv_goal.setText(myGoal);
+
+    }
+
+    // 사용자 데이터 db에 저장
+    private void writeChalList(){
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String currentProgress = String.valueOf(cnt);
+                String myGoal = "0";
+                String userId = userID.substring(0, userID.indexOf("@"));
+                Challenger challenger = new Challenger(userId, currentProgress, myGoal, im_inchal);
+                databaseReference.child(userId).setValue(challenger);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public void  checkDay(int cYear,int cMonth,int cDay,String userID){

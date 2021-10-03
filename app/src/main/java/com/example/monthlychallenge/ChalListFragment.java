@@ -37,7 +37,7 @@ public class ChalListFragment extends Fragment {
     Context ct = getActivity();
 
     Challenger user; // firebase에 저장된 사용자 정보 저장
-    String userId; // 넘겨받은 닉네임
+    String userId;
     String currentProgress;
     String myGoal;
 
@@ -48,20 +48,20 @@ public class ChalListFragment extends Fragment {
     TextView tv_currentProgress;
 
       // 사용자 챌린지 DB에 저장하기
-//    private void writeChalList(){
-//        databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                Challenger challenger = new Challenger(userId, currentProgress, myGoal, im_inchal);
-//                databaseReference.setValue(challenger);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
+    private void writeChalList(){
+        databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Challenger challenger = new Challenger(userId, currentProgress, myGoal, im_inchal);
+                databaseReference.setValue(challenger);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     // Challenger들 데이터 가져오기
     private void readChalList(){
@@ -112,11 +112,14 @@ public class ChalListFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         arrayList = new ArrayList<>(); //Challenge 담을 어레이 리스트 (어댑터 쪽으로 날림)
 
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            userId = bundle.getString("userId");
+            userId = userId.substring(0, userId.indexOf("@"));
+        }
+
         // firebase에 등록된 유저들 데이터 가져오기
         readChalList();
-
-        // 넘겨받은 사용자 데이터 저장
-        // writeChalList();
 
         // 목표 성공시 이미지 변경 후 firebase에 등록
 //        if(Integer.valueOf(myGoal) == Integer.valueOf(currentProgress)){
@@ -134,14 +137,6 @@ public class ChalListFragment extends Fragment {
 //            });
 //            readChalList();
 //        }
-
-
-        // 사용자의 현재 goal, currentProgress 값 세팅해주기기
-        tv_currentProgress = view.findViewById(R.id.currentProgress);
-        tv_goal = view.findViewById(R.id.myGoal);
-
-        tv_currentProgress.setText(currentProgress);
-        tv_goal.setText(myGoal);
         
         // Inflate the layout for this fragment
         return view;
