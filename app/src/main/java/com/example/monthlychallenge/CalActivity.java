@@ -106,14 +106,6 @@ public class CalActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-        // 사용자의 현재 goal, currentProgress 값 세팅해주기기
-        tv_currentProgress = findViewById(R.id.currentProgress);
-        tv_goal = findViewById(R.id.myGoal);
-
-        // tv_currentProgress.setText(String.valueOf(cnt));
-        // Todo tv_goal.setText(myGoal);
-
     }
 
     // 사용자 데이터 db에 저장
@@ -133,6 +125,12 @@ public class CalActivity extends AppCompatActivity {
 
             }
         });
+        // 사용자의 현재 goal, currentProgress 값 세팅해주기기
+        tv_currentProgress = findViewById(R.id.currentProgress);
+        tv_goal = findViewById(R.id.myGoal);
+
+        // tv_currentProgress.setText(String.valueOf(cnt));
+        // Todo tv_goal.setText(myGoal);
     }
 
     public void  checkDay(int cYear,int cMonth,int cDay,String userID){
