@@ -51,7 +51,7 @@
                     android:id="@+id/myGoal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="My Challenge"
+                    android:text="30"
                     android:textSize="20dp"
                     android:textColor="@color/black" />
             </LinearLayout>
@@ -68,10 +68,10 @@
                     android:textSize="20dp"
                     android:textColor="@color/black" />
                 <TextView
-                    android:id="@+id/currentProgress"
+                    android:id="@+id/tv_currentProgress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="My Challenge"
+                    android:text="0"
                     android:textSize="20dp"
                     android:textColor="@color/black" />
             </LinearLayout>

@@ -102,7 +102,8 @@ public class CalActivity extends AppCompatActivity {
                 intent_to_main.putExtra("cnt", cnt);
                 startActivity(intent_to_main);
 
-                writeChalList();
+                writeChalList(String.valueOf(cnt)
+                );
 
                 finish();
             }
@@ -110,12 +111,12 @@ public class CalActivity extends AppCompatActivity {
     }
 
     // 사용자 데이터 db에 저장
-    private void writeChalList(){
+    private void writeChalList(String cnt){
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String currentProgress = String.valueOf(cnt);
-                String myGoal = "0";
+                String currentProgress = cnt;
+                String myGoal = "30";
                 String userId = userID.substring(0, userID.indexOf("@"));
 
                 Challenger challenger;
@@ -127,6 +128,13 @@ public class CalActivity extends AppCompatActivity {
                     challenger = new Challenger(userId, currentProgress, myGoal, im_inchal);
                 }
                 databaseReference.child(userId).setValue(challenger);
+
+                // 사용자의 현재 goal, currentProgress 값 세팅해주기기
+                tv_currentProgress = findViewById(R.id.tv_currentProgress);
+                tv_goal = findViewById(R.id.myGoal);
+
+                tv_currentProgress.setText(cnt);
+                tv_goal.setText(myGoal);
             }
 
             @Override
@@ -134,12 +142,6 @@ public class CalActivity extends AppCompatActivity {
 
             }
         });
-        // 사용자의 현재 goal, currentProgress 값 세팅해주기기
-        tv_currentProgress = findViewById(R.id.currentProgress);
-        tv_goal = findViewById(R.id.myGoal);
-
-        // tv_currentProgress.setText(String.valueOf(cnt));
-        // Todo tv_goal.setText(myGoal);
     }
 
     public void  checkDay(int cYear,int cMonth,int cDay,String userID){
