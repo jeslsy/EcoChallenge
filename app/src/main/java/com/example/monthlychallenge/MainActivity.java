@@ -30,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
         String userID = mIntent.getStringExtra("userID");
         Log.e("tag", "userID 잘 넘어왔당");
 
+        // Cal에서 cnt가지고 넘어옴
+        Intent from_cal_Intent = getIntent();
+        String cnt = mIntent.getStringExtra("cnt");
+        Log.e("tag", "cnt 두 잘 넘어왔당");
 
         chalListFragment = new ChalListFragment();
         homeFragment = new HomeFragment();
