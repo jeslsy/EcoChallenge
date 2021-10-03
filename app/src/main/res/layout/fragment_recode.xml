@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RecodeFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="0.6"
+            android:hint="Eco Challenge"
+            android:textSize="30sp">
+
+        </TextView>
+
+
+        <CalendarView
+            android:id="@+id/cal_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6">
+
+        </CalendarView>
+
+        <TextView
+            android:id="@+id/diaryTextView"
+            android:layout_weight="0.5"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+        </TextView>
+        
+        <EditText
+            android:id="@+id/edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2">
+
+        </EditText>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/save_btn"
+                android:text="저장"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_weight="0.5"
+                android:layout_marginHorizontal="55dp"
+                android:layout_marginVertical="5dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+            </Button>
+
+            <Button
+                android:id="@+id/del_btn"
+                android:text="삭제"
+                android:textColor="#000000"
+                android:layout_weight="0.5"
+                android:layout_marginHorizontal="55dp"
+                android:layout_marginVertical="5dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+            </Button>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</FrameLayout>
