@@ -35,7 +35,6 @@ public class RecodeFragment extends Fragment {
     public TextView diaryTextView;
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +54,7 @@ public class RecodeFragment extends Fragment {
 
         //로그인 및 회원가입 엑티비티에서 이름을 받아옴
         //Intent intent=getIntent();
-        final String userID = "jeslsy~!~!";
+        final String userID = "jeslsy@naver.com";
         diaryTextView.setText(userID+"님의 달력 일기장");
 
 
