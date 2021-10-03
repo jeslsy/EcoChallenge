@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -29,7 +30,7 @@ public class RecodeFragment extends Fragment {
 
     View view;
 
-    public EditText edit_text;
+    public RecyclerView recode_view;
     public CalendarView calendarView;
     public Button del_Btn,save_Btn;
     public TextView diaryTextView;
@@ -49,20 +50,63 @@ public class RecodeFragment extends Fragment {
         diaryTextView=view.findViewById(R.id.diaryTextView); // 날짜 얻어와서 출력력
         save_Btn=view.findViewById(R.id.save_btn);
         del_Btn=view.findViewById(R.id.del_btn);
-        edit_text=view.findViewById(R.id.edit_text);
-
+        recode_view=view.findViewById(R.id.recode_view);
+        diaryTextView.setText(String.format("< 날짜를 클릭하세요 >"));
 
         //로그인 및 회원가입 엑티비티에서 이름을 받아옴
         //Intent intent=getIntent();
         final String userID = "jeslsy@naver.com";
-        diaryTextView.setText(userID+"님의 달력 일기장");
+        //diaryTextView.setText(userID+"님의 달력 일기장");
 
 
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                diaryTextView.setText(String.format("< %d / %d / %d >",year,month+1,dayOfMonth));
 
+                // db 기존 내용 불러오기
+                try{
+
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
+
+        //저장 버튼
+        save_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // edittext 작성 내용 db에 저장하기
+                try{
+
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        del_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // db 내용 삭제하기
+                try{
+
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
 
 
         // Inflate the layout for this fragment
         return view;
     }
-
 }

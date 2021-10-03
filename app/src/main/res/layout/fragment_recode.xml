@@ -28,28 +28,28 @@
             android:id="@+id/cal_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="6">
+            android:layout_weight="4">
 
         </CalendarView>
 
         <TextView
             android:id="@+id/diaryTextView"
-            android:layout_weight="1"
-            android:textSize="20sp"
+            android:layout_weight="0.5"
+            android:textColor="#FFC107"
+            android:textSize="30sp"
             android:layout_width="match_parent"
             android:textAlignment="center"
             android:layout_height="0dp">
 
         </TextView>
         
-        <EditText
-            android:id="@+id/edit_text"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recode_view"
             android:layout_width="match_parent"
-            android:layout_marginHorizontal="30dp"
             android:layout_height="0dp"
-            android:layout_weight="1.5">
+            android:layout_weight="3">
 
-        </EditText>
+        </androidx.recyclerview.widget.RecyclerView>
 
         <LinearLayout
             android:layout_width="match_parent"
